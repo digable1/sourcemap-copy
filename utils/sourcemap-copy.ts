@@ -5,22 +5,22 @@ import { parse } from 'ts-command-line-args';
 const configurationFile = './sourcemap-copy.json';
 const parentPath = '../';
 
-interface SourcemapMoveParameters {
+interface SourcemapCopyParameters {
     quiet?: boolean;
     help?: boolean;
 }
 
-export const sourcemapMoveParameters = parse<SourcemapMoveParameters>({
+export const sourcemapCopyParameters = parse<SourcemapCopyParameters>({
     quiet: { type: Boolean, optional: true, alias: 'q', description: 'Suppresses status/log messages' },
     help: { type: Boolean, optional: true, alias: 'h', description: 'Help' }
 },
 {
     helpArg: 'help',
-    headerContentSections: [{ header: 'Sourcemap Move', content: 'Command to copy source files to \'dest\' location for use cases where original locations get in the way'}],
+    headerContentSections: [{ header: 'Sourcemap Copy', content: 'Command to copy source files to \'dest\' location for use cases where original locations get in the way'}],
     footerContentSections: [{ header: '(c) digable1', content: 'Open Source License (TBD - likely Apache 2' }]
 });
 
-interface SourcemapMoveConfiguration {
+export interface SourcemapCopyConfiguration {
     rootToDist: string;
     distSource: string,
     rootToDistSrc: string;
@@ -30,9 +30,9 @@ interface SourcemapMoveConfiguration {
     utilsToRoot: string;
 }
 
-let configuration: SourcemapMoveConfiguration;
+let configuration: SourcemapCopyConfiguration;
 
-export function moveSourcemap(): void {
+export function copySourcemap(): void {
     const cwd = process.cwd();
     configuration = readConfiguration();
     if (cwd.indexOf(configuration.utilsDirectory) < 0) {
@@ -42,7 +42,7 @@ export function moveSourcemap(): void {
     process.chdir(path.resolve(configuration.utilsToRoot));
     const originalDirectory = process.cwd();
 
-    if (!sourcemapMoveParameters.quiet) {
+    if (!sourcemapCopyParameters.quiet) {
         console.log(`Syncing sourcemaps:`);
         console.log(`    Original directory  : ${originalDirectory}`);
         console.log(`    Desination directory: ${originalDirectory}${configuration.rootToDistSrc}`);
@@ -55,7 +55,7 @@ export function moveSourcemap(): void {
         fs.writeFileSync(`${dirEntry.name}`, JSON.stringify(mapObject), { encoding: 'utf-8' });
     });
     process.chdir(cwd);
-    if (!sourcemapMoveParameters.quiet) {
+    if (!sourcemapCopyParameters.quiet) {
         console.log();
         console.log(`Done`);
         console.log();
@@ -70,7 +70,7 @@ function changeMapSourcesPath(mapPath: string, newSource = configuration.distSou
     const sources = mapDefinition.sources as Array<string> | undefined;
 
     if (sources && mapPath.indexOf(newSource) < 0) {
-        if (!sourcemapMoveParameters.quiet) {
+        if (!sourcemapCopyParameters.quiet) {
             console.log(`    Map file '${mapPath}':`);
         }
         for (let sourceIndex = 0; sourceIndex < sources.length; ++sourceIndex) {
@@ -78,7 +78,7 @@ function changeMapSourcesPath(mapPath: string, newSource = configuration.distSou
             if (originalSource.indexOf(newSource) < 0) {
                 sources[sourceIndex] = changeSourcePath(sources[sourceIndex], newSource);
             }
-            if (!sourcemapMoveParameters.quiet) {
+            if (!sourcemapCopyParameters.quiet) {
                 console.log(`       [original] -> [new]: ${originalSource} -> ${sources[sourceIndex]}`);
             }
         }
@@ -187,9 +187,9 @@ function isDirectoryExcluded(directoryParm: string): boolean {
     return false;
 }
 
-function readConfiguration(file = configurationFile): SourcemapMoveConfiguration {
+function readConfiguration(file = configurationFile): SourcemapCopyConfiguration {
     try {
-        return JSON.parse(fs.readFileSync(file, { encoding: 'utf-8' })) as SourcemapMoveConfiguration;
+        return JSON.parse(fs.readFileSync(file, { encoding: 'utf-8' })) as SourcemapCopyConfiguration;
     } catch(e) {
         console.error(`Could not find configuration file '${file}'`);
         console.error(`    Are you in the same directory as this configuration file?`);
@@ -210,4 +210,4 @@ function removeParentPaths(source: string): string {
 }
 
 
-moveSourcemap();
+copySourcemap();
