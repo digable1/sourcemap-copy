@@ -1,4 +1,4 @@
-## Move Sources (copy) to publish folder and update Sourcmap references
+## Copy Sources to publish folder and update Sourcmap references
 
 ### Overview
 
