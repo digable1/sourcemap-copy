@@ -1,6 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { exitIfDistDirectoryDoesNotExist, isDirectoryExcluded, configuration } from '../sourcemap-copy';
+import { configuration } from '../sourcemap-copy';
+import { exitIfDistDirectoryDoesNotExist } from './exit-if-dist-directory-does-not-exist';
+import { isDirectoryExcluded } from './is-directory-excluded';
 
 export function findMapFiles(directory = configuration.rootToDist, fileExtensionFilter = configuration.allowedFileExtension): Array<fs.Dirent> {
     exitIfDistDirectoryDoesNotExist(directory);

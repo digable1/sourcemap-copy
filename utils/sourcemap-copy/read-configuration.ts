@@ -1,5 +1,6 @@
 import * as fs from 'fs';
-import { configurationFile, SourcemapCopyConfiguration } from "../sourcemap-copy";
+import { configurationFile } from "../sourcemap-copy";
+import { SourcemapCopyConfiguration } from './schemas/sourcemap-copy-configuration';
 
 export function readConfiguration(file = configurationFile): SourcemapCopyConfiguration {
     try {
