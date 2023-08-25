@@ -23,8 +23,8 @@ There are configuration options to:
 1. Tell this tool how to get from the root directory to the publish "src" directory in relative path terms (defaults to 'dist/_src/)
 1. Define the internal 'src' directory with the publish directory (defaults to '_src')
 1. The extension that defines a sourcemap file (defaults to '.map')
-1. Define the directory this tool resides in (defaults to 'utils')
-1. Tell this tool how to get from the directory this tool resides in to the project root (defaults to '..')
+1. Define the directory this tool resides in (defaults to '.')
+1. Tell this tool how to get from the directory this tool resides in to the project root (defaults to '.')
 
 _Note:_ Do not supply the ending path separators to the above configurations
 
@@ -41,7 +41,7 @@ The JSON default for this configuration is:
         "spec",
         ".git"
     ],
-    "utilsDirectory": "utils",
-    "utilsToRoot": ".."
+    "utilsDirectory": ".",
+    "utilsToRoot": "."
 }
 ```
