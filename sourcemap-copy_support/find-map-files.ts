@@ -1,10 +1,13 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { configuration } from '../sourcemap-copy';
+import { getConfiguration } from '../sourcemap-copy';
 import { exitIfDistDirectoryDoesNotExist } from './exit-if-dist-directory-does-not-exist';
 import { isDirectoryExcluded } from './is-directory-excluded';
 
-export function findMapFiles(directory = configuration.rootToDist, fileExtensionFilter = configuration.allowedFileExtension): Array<fs.Dirent> {
+export function findMapFiles(directoryParm?: string, fileExtensionFilterParm?: string): Array<fs.Dirent> {
+    const temp = getConfiguration();
+    const directory = directoryParm ? directoryParm : getConfiguration().rootToDist;
+    const fileExtensionFilter = fileExtensionFilterParm ? fileExtensionFilterParm : getConfiguration().allowedFileExtension;
     exitIfDistDirectoryDoesNotExist(directory);
 
     const newDirContents: Array<fs.Dirent> = [];

@@ -1,8 +1,8 @@
 import * as fs from 'fs';
-import { configuration } from '../sourcemap-copy';
+import { getConfiguration } from '../sourcemap-copy';
 import { removeParentPaths } from './remove-parent-paths';
 
-export function copySources(mapDefinition: any, distLocation = configuration.rootToDist, newSource = configuration.distSource): void {
+export function copySources(mapDefinition: any, distLocation = getConfiguration().rootToDist, newSource = getConfiguration().distSource): void {
     const sources = mapDefinition.sources as Array<string>;
 
     sources.forEach((source) => {

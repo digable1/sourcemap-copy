@@ -1,6 +1,7 @@
 import * as fs from 'fs';
-import { configurationFile } from "../sourcemap-copy";
 import { SourcemapCopyConfiguration } from './schemas/sourcemap-copy-configuration';
+
+const configurationFile = './sourcemap-copy.json';
 
 export function readConfiguration(file = configurationFile): SourcemapCopyConfiguration {
     try {

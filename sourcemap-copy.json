@@ -8,6 +8,6 @@
         "spec",
         ".git"
     ],
-    "utilsDirectory": "utils",
-    "utilsToRoot": ".."
+    "utilsDirectory": ".",
+    "utilsToRoot": "."
 }

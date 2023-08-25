@@ -1,4 +1,4 @@
-import { SourcemapCopyConfiguration } from '../utils/sourcemap-copy/schemas/sourcemap-copy-configuration';
+import { SourcemapCopyConfiguration } from '../sourcemap-copy_support/schemas/sourcemap-copy-configuration';
 
 describe(`Should run tool 'sourcemap-copy.ts correctly`, () => {
     it(`Should run blank test`, () => {
