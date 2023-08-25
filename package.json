@@ -1,18 +1,17 @@
 {
-  "name": "metronomes-controller",
-  "version": "0.0.10",
+  "name": "sourcemap-copy",
+  "version": "0.0.01",
   "description": "Proof of Concept for multiple metronomes back end",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/sourcemap-copy.js",
+  "types": "./dist/sourcemap-copy.d.ts",
   "files": [
-    "./dist",
-    "!./index.ts"
+    "./dist"
   ],
   "scripts": {
     "afterinstall": "npm run build && npm run packandpublish",
     "build": "tsc --outDir ./dist",
     "installandeverything": "npm install && npm run afterinstall",
-    "postbuild": "npm run zaptarballs && ts-node sourcemap-copy.ts && npm pack",
+    "postbuild": "npm run zaptarballs && node dist/sourcemap-copy.js && npm pack",
     "pack": "npm run zaptarballs && npm pack",
     "packandpublish": "npm run pack && npm run publish",
     "publish": "npm test && npm publish --access public",
