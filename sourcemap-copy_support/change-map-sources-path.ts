@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 
-import { getConfiguration, sourcemapCopyParameters, parentPath } from '../sourcemap-copy';
+import { configuration, sourcemapCopyParameters, parentPath } from '../sourcemap-copy';
 import { removeParentPaths } from './remove-parent-paths';
 
-export function changeMapSourcesPath(mapPath: string, newSource = getConfiguration().distSource): Object {
+export function changeMapSourcesPath(mapPath: string, newSource = configuration.distSource): Object {
     const encoding = 'utf-8';
     const contents = fs.readFileSync(mapPath, { encoding: encoding });
     const mapDefinition = JSON.parse(contents);

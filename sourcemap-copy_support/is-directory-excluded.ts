@@ -1,7 +1,7 @@
-import { getConfiguration } from "../sourcemap-copy";
+import { configuration } from "../sourcemap-copy";
 
 export function isDirectoryExcluded(directoryParm: string): boolean {
-    getConfiguration().excluded.forEach((excludedEntry) => {
+    configuration.excluded.forEach((excludedEntry) => {
         if (excludedEntry.startsWith(directoryParm)) {
             return true;
         }

@@ -21,38 +21,22 @@ export const sourcemapCopyParameters = parse<SourcemapCopyParameters>({
 });
 
 
-let configuration: SourcemapCopyConfiguration = {} as SourcemapCopyConfiguration;
-export function getConfiguration(): SourcemapCopyConfiguration {
-    return configuration;
-}
-export function setConfiguration(newConfiguration: SourcemapCopyConfiguration): void {
-    configuration = newConfiguration;
-}
-export class Configuration {
-    private static readonly _configuration: SourcemapCopyConfiguration = {} as SourcemapCopyConfiguration;
-    static get configuration(): SourcemapCopyConfiguration {
-        return Configuration._configuration;
-    }
-    static set configuration(newConfiguration: SourcemapCopyConfiguration) {
-        (Configuration._configuration as SourcemapCopyConfiguration) = newConfiguration;
-    }
-}
+export const configuration: SourcemapCopyConfiguration = readConfiguration();
 
 export function copySourcemap(): void {
     const cwd = process.cwd();
-    setConfiguration(readConfiguration());
-    const utilsConfiguration = getConfiguration().utilsDirectory === '.' ? '' : getConfiguration().utilsDirectory;
+    const utilsConfiguration = configuration.utilsDirectory === '.' ? '' : configuration.utilsDirectory;
     if (cwd.indexOf(utilsConfiguration) < 0) {
-        console.error(`This must be run in the ${getConfiguration().utilsDirectory} directory`);
+        console.error(`This must be run in the ${configuration.utilsDirectory} directory`);
         process.exit(1);
     }
-    process.chdir(path.resolve(getConfiguration().utilsToRoot));
+    process.chdir(path.resolve(configuration.utilsToRoot));
     const originalDirectory = process.cwd();
 
     if (!sourcemapCopyParameters.quiet) {
         console.log(`Syncing sourcemaps:`);
         console.log(`    Original directory  : ${originalDirectory}`);
-        console.log(`    Desination directory: ${originalDirectory}/${getConfiguration().rootToDistSrc}`);
+        console.log(`    Desination directory: ${originalDirectory}/${configuration.rootToDistSrc}`);
         console.log();
     }
 
