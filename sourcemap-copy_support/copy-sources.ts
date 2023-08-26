@@ -9,8 +9,8 @@ export function copySources(mapDefinition: any, distLocation = configuration.roo
         const sourcePath = `${removeParentPathsAndDistSourceAddParentPath(source)}`;
         const destinationPath = `${newSource}/${removeParentPaths(sourcePath)}`;
         const distDestinationPath = `${distLocation}/${destinationPath}`;
-        fs.mkdirSync(getPath(distDestinationPath), { recursive: true });
-        fs.copyFileSync(sourcePath, distDestinationPath, fs.constants.COPYFILE_FICLONE);
+        mkdirSyncImpl(getPath(distDestinationPath), { recursive: true });
+        copyFileSyncImpl(sourcePath, distDestinationPath, fs.constants.COPYFILE_FICLONE);
     });
 
     function removeParentPathsAndDistSourceAddParentPath(sourceParam: string): string {
@@ -31,4 +31,16 @@ export function copySources(mapDefinition: any, distLocation = configuration.roo
         const sourcePath = sourceParam.substring(0, lastSeparatorIndex);
         return sourcePath;
     }
+}
+
+type MkdirSyncImplType = (path: fs.PathLike, options: fs.MakeDirectoryOptions & { recursive: true; }) => string | undefined;
+type CopyFileImplType = (source: fs.PathLike, dest: fs.PathLike, mode: number) => void;
+let mkdirSyncImpl: MkdirSyncImplType = fs.mkdirSync as MkdirSyncImplType;
+let copyFileSyncImpl: CopyFileImplType = fs.copyFileSync as CopyFileImplType;
+
+export function setMkdirSyncImpl(func: MkdirSyncImplType) {
+    mkdirSyncImpl = func;
+}
+export function setCopyFileSyncImpl(func: CopyFileImplType) {
+    copyFileSyncImpl = func;
 }
