@@ -36,7 +36,9 @@ describe(`Should run tool 'sourcemap-copy.ts correctly`, () => {
             return undefined;
         }
         function fsMockCopyFileSync(dummySourceFile: fs.PathLike, dummyDestFile: fs.PathLike, dummyMode = -1): void {
-            expect(dummySourceFile).withContext('dummySourceFile').toEqual(`dummySource`);
+            const firstSource = dummyMapDefinition.sources[0] as string;
+            const dummySource = firstSource.substring(firstSource.lastIndexOf('/') + 1);
+            expect(dummySourceFile).withContext('dummySourceFile').toEqual(`${dummySource}`);
             expect(dummyDestFile).withContext('dummyDestFile').toEqual(`${dummyDestFile}`);
         }
     });
