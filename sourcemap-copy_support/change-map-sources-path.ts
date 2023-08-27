@@ -10,7 +10,7 @@ export function changeMapSourcesPath(mapPath: string, newSource = configuration.
     const sources = mapDefinition.sources as Array<string> | undefined;
 
     if (sources && mapPath.indexOf(newSource) < 0) {
-        if (!sourcemapCopyParameters.quiet) {
+        if (sourcemapCopyParameters && !sourcemapCopyParameters.quiet) {
             console.log(`    Map file '${mapPath}':`);
         }
         for (let sourceIndex = 0; sourceIndex < sources.length; ++sourceIndex) {
@@ -18,7 +18,7 @@ export function changeMapSourcesPath(mapPath: string, newSource = configuration.
             if (originalSource.indexOf(newSource) < 0) {
                 sources[sourceIndex] = changeSourcePath(sources[sourceIndex], newSource);
             }
-            if (!sourcemapCopyParameters.quiet) {
+            if (sourcemapCopyParameters && !sourcemapCopyParameters.quiet) {
                 console.log(`       [original] -> [new]: ${originalSource} -> ${sources[sourceIndex]}`);
             }
         }

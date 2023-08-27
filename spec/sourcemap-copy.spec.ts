@@ -1,6 +1,7 @@
 import { SourcemapCopyConfiguration } from '../sourcemap-copy_support/schemas/sourcemap-copy-configuration';
 import { readConfiguration } from '../sourcemap-copy_support/read-configuration';
 import { copySources } from '../sourcemap-copy_support/copy-sources';
+import { changeMapSourcesPath } from '../sourcemap-copy_support/change-map-sources-path';
 import { setMkdirSyncImpl, setCopyFileSyncImpl, setReadFileSyncImpl, setWriteReadFileSyncImpl, setExistsSyncImpl, setReaddirSyncImpl } from '../sourcemap-copy_support/fs-impl';
 import * as fs from 'fs';
 
@@ -48,6 +49,24 @@ describe(`Should run tool 'sourcemap-copy.ts correctly`, () => {
             const dummySource = firstSource.substring(firstSource.lastIndexOf('/') + 1);
             expect(dummySourceFile).withContext('dummySourceFile').toEqual(`${dummySource}`);
             expect(dummyDestFile).withContext('dummyDestFile').toEqual(`${dummyDestFile}`);
+        }
+    });
+
+    it(`Should change map source path correctly in .map file`, () => {
+        setReadFileSyncImpl(fsMockReadFileSync);
+
+        const dummyMapDefinition:any = {
+            sources: [
+                '../dummySource'
+            ]
+        };
+        const newSource = 'newSource';
+        const newDummyMapDefinition = changeMapSourcesPath('dummyMapPath', 'newSource');
+        console.log(`newDummyMapDefinition: ${JSON.stringify(newDummyMapDefinition, null, 4)}`)
+        expect((newDummyMapDefinition as any).sources[0]).toBe('newSource/../dummySource');
+
+        function fsMockReadFileSync(dummySourceFile: fs.PathOrFileDescriptor, options: | { encoding: BufferEncoding; flag?: string | undefined; } | BufferEncoding): string {
+            return JSON.stringify(dummyMapDefinition);
         }
     });
 });
