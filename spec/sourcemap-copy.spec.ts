@@ -62,7 +62,6 @@ describe(`Should run tool 'sourcemap-copy.ts correctly`, () => {
         };
         const newSource = 'newSource';
         const newDummyMapDefinition = changeMapSourcesPath('dummyMapPath', 'newSource');
-        console.log(`newDummyMapDefinition: ${JSON.stringify(newDummyMapDefinition, null, 4)}`)
         expect((newDummyMapDefinition as any).sources[0]).toBe('newSource/../dummySource');
 
         function fsMockReadFileSync(dummySourceFile: fs.PathOrFileDescriptor, options: | { encoding: BufferEncoding; flag?: string | undefined; } | BufferEncoding): string {
