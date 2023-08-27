@@ -1,11 +1,11 @@
-import * as fs from 'fs';
+import { readFileSyncImpl } from './fs-impl';
 
 import { configuration, sourcemapCopyParameters, parentPath } from '../sourcemap-copy';
 import { removeParentPaths } from './remove-parent-paths';
 
 export function changeMapSourcesPath(mapPath: string, newSource = configuration.distSource): Object {
     const encoding = 'utf-8';
-    const contents = fs.readFileSync(mapPath, { encoding: encoding });
+    const contents = readFileSyncImpl(mapPath, { encoding: encoding });
     const mapDefinition = JSON.parse(contents);
     const sources = mapDefinition.sources as Array<string> | undefined;
 

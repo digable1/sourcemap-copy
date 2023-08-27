@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import { writeFileSyncImpl } from './sourcemap-copy_support/fs-impl';
 import * as path from 'path';
 import { parse } from 'ts-command-line-args';
 import { changeMapSourcesPath } from './sourcemap-copy_support/change-map-sources-path';
@@ -43,7 +43,7 @@ export function copySourcemap(): void {
     findMapFiles().forEach((dirEntry) => {
         const mapObject = changeMapSourcesPath(`${dirEntry.name}`);
         copySources(mapObject);
-        fs.writeFileSync(`${dirEntry.name}`, JSON.stringify(mapObject), { encoding: 'utf-8' });
+        writeFileSyncImpl(`${dirEntry.name}`, JSON.stringify(mapObject), { encoding: 'utf-8' });
     });
     process.chdir(cwd);
     if (!sourcemapCopyParameters.quiet) {

@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import { readFileSyncImpl } from './fs-impl';
 import { SourcemapCopyConfiguration } from './schemas/sourcemap-copy-configuration';
 
 const configurationFile = './sourcemap-copy.json';
@@ -12,11 +12,4 @@ export function readConfiguration(file = configurationFile): SourcemapCopyConfig
         console.error(e);
         process.exit(1);
     }
-}
-
-type ReadFileSyncImplType = (path: fs.PathOrFileDescriptor, options: | { encoding: BufferEncoding; flag?: string | undefined; } | BufferEncoding) => string;
-let readFileSyncImpl: ReadFileSyncImplType = fs.readFileSync as ReadFileSyncImplType;
-
-export function setReadFileSyncImpl(func: ReadFileSyncImplType) {
-    readFileSyncImpl = func;
 }

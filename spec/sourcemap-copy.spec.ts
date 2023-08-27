@@ -1,11 +1,19 @@
 import { SourcemapCopyConfiguration } from '../sourcemap-copy_support/schemas/sourcemap-copy-configuration';
 import { readConfiguration } from '../sourcemap-copy_support/read-configuration';
 import { copySources } from '../sourcemap-copy_support/copy-sources';
-import { setMkdirSyncImpl, setCopyFileSyncImpl } from '../sourcemap-copy_support/copy-sources';
-import { setReadFileSyncImpl } from '../sourcemap-copy_support/read-configuration';
+import { setMkdirSyncImpl, setCopyFileSyncImpl, setReadFileSyncImpl, setWriteReadFileSyncImpl, setExistsSyncImpl, setReaddirSyncImpl } from '../sourcemap-copy_support/fs-impl';
 import * as fs from 'fs';
 
 describe(`Should run tool 'sourcemap-copy.ts correctly`, () => {
+    afterEach(() => {
+        setMkdirSyncImpl(fs.mkdirSync);
+        setCopyFileSyncImpl(fs.copyFileSync);
+        setReadFileSyncImpl(fs.readFileSync);
+        setWriteReadFileSyncImpl(fs.writeFileSync);
+        setExistsSyncImpl(fs.existsSync);
+        setReaddirSyncImpl(fs.readdirSync);
+    });
+
     it(`Should read configuration correctly from JSON in mock file`, () => {
         setReadFileSyncImpl(fsMockReadFileSync);
 

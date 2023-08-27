@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { mkdirSyncImpl, copyFileSyncImpl} from './fs-impl'
 import { configuration } from '../sourcemap-copy';
 import { removeParentPaths } from './remove-parent-paths';
 
@@ -31,16 +32,4 @@ export function copySources(mapDefinition: any, distLocation = configuration.roo
         const sourcePath = sourceParam.substring(0, lastSeparatorIndex);
         return sourcePath;
     }
-}
-
-type MkdirSyncImplType = (path: fs.PathLike, options: fs.MakeDirectoryOptions & { recursive: true; }) => string | undefined;
-type CopyFileImplType = (source: fs.PathLike, dest: fs.PathLike, mode: number) => void;
-let mkdirSyncImpl: MkdirSyncImplType = fs.mkdirSync as MkdirSyncImplType;
-let copyFileSyncImpl: CopyFileImplType = fs.copyFileSync as CopyFileImplType;
-
-export function setMkdirSyncImpl(func: MkdirSyncImplType) {
-    mkdirSyncImpl = func;
-}
-export function setCopyFileSyncImpl(func: CopyFileImplType) {
-    copyFileSyncImpl = func;
 }

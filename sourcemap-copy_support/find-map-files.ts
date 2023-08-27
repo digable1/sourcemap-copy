@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { readdirSyncImpl } from './fs-impl';
 import * as path from 'path';
 import { configuration } from '../sourcemap-copy';
 import { exitIfDistDirectoryDoesNotExist } from './exit-if-dist-directory-does-not-exist';
@@ -11,7 +12,7 @@ export function findMapFiles(directoryParm?: string, fileExtensionFilterParm?: s
 
     const newDirContents: Array<fs.Dirent> = [];
     if (!isDirectoryExcluded(directory)) {
-        const dirContents = fs.readdirSync(`${directory}`, { withFileTypes: true });
+        const dirContents = readdirSyncImpl(`${directory}`, { withFileTypes: true });
         dirContents.forEach((dir) => {
             if (!dir.name.startsWith('.')) {
                 if (!isDirectoryExcluded(dir.name)) {
