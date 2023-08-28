@@ -12,7 +12,7 @@
   },
   "scripts": {
     "afterinstall": "npm run build && npm run packandpublish",
-    "build": "tsc --outDir ./dist",
+    "build": "npx tsc --outDir ./dist",
     "copyjsonconfig": "cp sourcemap-copy.json dist || copy sourcemap-copy.json dist",
     "installandeverything": "npm install && npm run afterinstall",
     "postbuild": "npm run copyjsonconfig && npm run zaptarballs && node dist/sourcemap-copy.js && npm pack",
