@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 import { writeFileSyncImpl } from './sourcemap-copy_support/fs-impl';
 import * as path from 'path';
 import { parse } from 'ts-command-line-args';

@@ -1,13 +1,15 @@
 {
   "name": "sourcemap-copy",
-  "version": "0.0.01",
+  "version": "0.0.02",
   "description": "Proof of Concept for multiple metronomes back end",
   "main": "./dist/sourcemap-copy.js",
   "types": "./dist/sourcemap-copy.d.ts",
-  "bin": "./dist/sourcemap-copy.js",
   "files": [
     "./dist"
   ],
+  "bin": {
+    "sourcemap-copy": "./dist/sourcemap-copy.js"
+  },
   "scripts": {
     "afterinstall": "npm run build && npm run packandpublish",
     "build": "tsc --outDir ./dist",
@@ -26,12 +28,12 @@
   "devDependencies": {
     "@types/jasmine": "^4.3.5",
     "@types/node": "^20.5.4",
+    "husky": "^8.0.3",
     "jasmine": "^5.1.0",
     "jasmine-core": "^5.1.0",
     "jasmine-spec-reporter": "^7.0.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6",
-    "husky": "^8.0.3"
+    "typescript": "^5.1.6"
   },
   "author": "Nathan Syfrig",
   "license": "ISC"
