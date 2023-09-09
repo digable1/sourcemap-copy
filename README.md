@@ -1,5 +1,15 @@
 ## Copy Sources to publish folder and update Sourcmap references
 
+### npm
+
+_local:_ npm install -D sourcemap-copy
+_Global:_ npm install -g -D sourcemap-copy
+
+### Invocation
+
+_Local:_ npx sourcemap-copy
+_Global:_ sourcemap-copy
+
 ### Overview
 
 This command:
