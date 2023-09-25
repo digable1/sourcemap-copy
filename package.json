@@ -1,7 +1,7 @@
 {
   "name": "sourcemap-copy",
-  "version": "0.0.02",
-  "description": "Proof of Concept for multiple metronomes back end",
+  "version": "0.0.03",
+  "description": "Copy Sources to publish folder and update Sourcmap references in .map files",
   "main": "./dist/sourcemap-copy.js",
   "types": "./dist/sourcemap-copy.d.ts",
   "files": [
